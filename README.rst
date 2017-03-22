@@ -45,14 +45,6 @@ Project resources
 - `Issue tracker <https://github.com/gotling/mopidy-auto/issues>`_
 
 
-Credits
-=======
-
-- Original author: `Marcus Gotling <https://github.com/gotling`__
-- Current maintainer: `Marcus Gotling <https://github.com/gotling`__
-- `Contributors <https://github.com/gotling/mopidy-auto/graphs/contributors>`_
-
-
 Changelog
 =========
 
