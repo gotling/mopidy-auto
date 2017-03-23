@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Automatic interface for Mopidy">
+
+    <title>Mopidy Auto playback</title>
+
+    <link rel="stylesheet" href="vendor/pure-min.css" type="text/css">
+    <link rel="stylesheet" href="vendor/grids-responsive-min.css" type="text/css">
+    <link rel="stylesheet" href="css/auto.css" type="text/css">
+</head>
+<body>
+<div id="layout" class="pure-g">
+    <div class="pure-u-1">
+        <h1 id="current-track">Track</h1>
+        <div>by <span class="artist" id="current-artist">Artist</span></div>
+        <div>on <span class="album" id="current-album">Album</span></div>
+    </div>
+
+    <div class="pure-u-1-2">
+        <img class="action" id="play" src="images/ic_play_circle_outline_black_48px.svg">
+        <img class="action" id="pause" src="images/ic_pause_circle_outline_black_48px.svg">
+    </div>
+    <div class="pure-u-1-2">
+        <img class="action" id="next" src="images/ic_skip_next_black_48px.svg">
+    </div>
+
+    <div class="pure-u-1">
+        <h2><label for="volume">Volume</label></h2>
+        <input type="range" min="0" max="100" step="10" id="volume" class="slider">
+    </div>
+</div>
+<script type="text/javascript" src="/mopidy/mopidy.min.js"></script>
+<script type="text/javascript" src="vendor/zepto.js"></script>
+<script type="text/javascript" src="js/auto.js"></script>
+</body>
+</html>
