@@ -43,15 +43,6 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         rand_idx = random.randint(0, len(refs) - 1)
         return self.get_random_album(refs[rand_idx].uri)
 
-    """
-    def get_tracks(self, uri):
-        results = self.core.library.browse(uri).get()
-        for result in results:
-            if result.type == 'directory':
-                return self.get_tracks(result.uri)
-
-        return results
-    """
     def play_uris(self, uris):
         print("\n----\nFound {} tracks\n----\n".format(len(uris)))
 
