@@ -23,7 +23,15 @@ mopidy.on("state:online", function () {
 });
 
 $('#play').on('click', function() {
+   mopidy.tracklist.getLength().done(function(length) {
+      console.log(length);
+      if (length === 0) {
+         console.log('Track list is empty');
+         mopidy.tracklist.clear();
+      }
+   });
    mopidy.playback.play();
+
 });
 
 $('#pause').on('click', function() {

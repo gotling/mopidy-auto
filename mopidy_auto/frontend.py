@@ -13,11 +13,19 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         self.config = config
         self.core = core
 
+    def tracklist_changed(self):
+        if self.core.tracklist.get_length().get() == 0:
+            self.play_random_album()
+
     def track_playback_ended(self, tl_track, time_position):
         if self.core.tracklist.index(tl_track).get() == self.core.tracklist.get_length().get() - 1:
-            uri = base_path + 'Rock'
-            tracks = self.get_random_album(uri)
-            self.play_uris(tracks)
+            self.play_random_album()
+
+    def play_random_album(self):
+        print("Play random album")
+        uri = base_path + 'Rock'
+        tracks = self.get_random_album(uri)
+        self.play_uris(tracks)
 
     def get_random_album(self, uri):
         track_uris = []
