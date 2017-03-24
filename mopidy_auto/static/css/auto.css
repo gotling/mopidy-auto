@@ -20,11 +20,24 @@ body {
     text-align: center;
 }
 
+/*
+** HELPERS
+**/
+
+.initial-hidden {
+    display: none;
+}
+
 .disabled {
     opacity: 0.1;
     pointer-events: none;
     cursor: default;
 }
+
+/*
+** ELEMENTS
+**/
+
 img {
     max-width: 384px;
     width: 70%;
