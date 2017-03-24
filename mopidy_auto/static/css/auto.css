@@ -1,8 +1,13 @@
 /*
-** BACKGROUND
+** LAYOUT
 **/
 
+html {
+    height: 100%;
+}
+
 body {
+    height: 100%;
     /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#b5bdc8+0,828c95+17,828c95+85,28343b+100 */
     background: rgb(181,189,200); /* Old browsers */
     background: -moz-linear-gradient(top, rgba(181,189,200,1) 0%, rgba(130,140,149,1) 17%, rgba(130,140,149,1) 85%, rgba(40,52,59,1) 100%); /* FF3.6-15 */
