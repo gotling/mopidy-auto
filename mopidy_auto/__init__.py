@@ -3,8 +3,10 @@ from __future__ import unicode_literals
 import logging
 import os
 
+import tornado.web
 from mopidy import config, ext
 
+from .web import IndexHandler, VolumeHandler
 
 __version__ = '0.1.0'
 
@@ -36,8 +38,14 @@ class Extension(ext.Extension):
         from .frontend import AutoFrontend
         registry.add('frontend', AutoFrontend)
 
-        # TODO: Edit or remove entirely
-        registry.add('http:static', {
+        registry.add('http:app', {
             'name': self.ext_name,
-            'path': os.path.join(os.path.dirname(__file__), 'static'),
+            'factory': self.webapp
         })
+
+    def webapp(self, config, core):
+        return [
+            (r'/(index.html)?', IndexHandler, dict(core=core)),
+            (r'/max_volume', VolumeHandler, dict(core=core)),
+            (r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'static')}),
+        ]

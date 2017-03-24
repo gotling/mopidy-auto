@@ -55,6 +55,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
     def play_random_album(self):
         section = self.get_section_by_time()
         logger.info("Auto play of random album, folder: %s", section['folder'])
+        if self.core.mixer.get_volume().get() > section['max_volume']:
+            self.core.mixer.set_volume(section['max_volume'])
         uri = self.base_path + section['folder']
         tracks = self.get_random_album(uri)
         self.play_uris(tracks)
@@ -70,7 +72,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
     def get_random_album(self, uri):
         track_uris = []
-        print(uri)
+        logger.info("Navigating file structure, URI: %s", uri)
 
         refs = self.core.library.browse(uri).get()
 
@@ -85,7 +87,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         return self.get_random_album(refs[rand_idx].uri)
 
     def play_uris(self, uris):
-        print("\n----\nFound {} tracks\n----\n".format(len(uris)))
+        logger.info("Found %d tracks", len(uris))
 
         self.core.tracklist.clear()
         self.core.tracklist.add(uris=uris)
