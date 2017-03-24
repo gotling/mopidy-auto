@@ -16,6 +16,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         self.config = config
         self.core = core
 
+        self.history = []
+
         self.base_path = self.config['auto']['base_path']
         logger.info("Auto base path: %s", self.base_path)
         self.sections = []
@@ -57,6 +59,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         logger.info("Auto play of random album, folder: %s", section['folder'])
         if self.core.mixer.get_volume().get() > section['max_volume']:
             self.core.mixer.set_volume(section['max_volume'])
+
         uri = self.base_path + section['folder']
         tracks = self.get_random_album(uri)
         self.play_uris(tracks)
@@ -81,14 +84,29 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
                 track_uris.append(ref.uri)
 
         if len(track_uris) > 0:
+            self.history.append(uri)
             return track_uris
 
+        refs = self.get_unplayed_directories(refs)
         rand_idx = random.randint(0, len(refs) - 1)
         return self.get_random_album(refs[rand_idx].uri)
 
     def play_uris(self, uris):
         logger.info("Found %d tracks", len(uris))
 
-        self.core.tracklist.clear()
+        index = self.core.tracklist.get_length().get()
         self.core.tracklist.add(uris=uris)
-        self.core.playback.play()
+        self.core.playback.play(tlid=index + 1)
+
+    def get_unplayed_directories(self, refs):
+        unplayed = [x for x in refs if x.uri not in self.history]
+
+        # If all albums have been played:
+        #  Return list containing all except the last played
+        #  Clear history
+        if len(unplayed) == 0:
+            logger.info("Unique albums depleted. Clearing history")
+            unplayed = [x for x in refs if x.uri != self.history[-1]]
+            self.history = []
+
+        return unplayed
