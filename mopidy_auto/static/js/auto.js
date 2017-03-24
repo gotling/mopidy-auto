@@ -1,5 +1,3 @@
-var basePath = 'file:///Users/marcus/Media/Music/';
-
 var mopidy = new Mopidy();
 
 /*
