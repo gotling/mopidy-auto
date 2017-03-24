@@ -15,6 +15,11 @@ body {
     text-align: center;
 }
 
+.disabled {
+    opacity: 0.1;
+    pointer-events: none;
+    cursor: default;
+}
 img {
     max-width: 384px;
     width: 70%;

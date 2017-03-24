@@ -80,9 +80,11 @@ function setVolumeUi(volume) {
 function toggleButtons(state) {
    if (state === 'playing') {
       $('#play').hide();
+      $('#next').removeClass('disabled');
       $('#pause').show();
    } else {
       $('#play').show();
+      $('#next').addClass('disabled');
       $('#pause').hide();
    }
 }
