@@ -1,32 +1,13 @@
 import random
 
 import datetime
+
+import logging
 import pykka
 
 from mopidy import core
 
-base_path = 'file:///Users/marcus/Media/Music/'
-
-"""
-current_time
-
-for time in times:
-    if current_time > start_time and current_time < end_time:
-        section = folder
-
-
-
-start_time
-end_time
-folder
-max_volume
-"""
-
-sections = [
-    {"hour": 0, "minute": 0, "folder": "Rap", "max_volume": 80},
-    {"hour": 11, "minute": 0, "folder": "Trip Hop", "max_volume": 100},
-    {"hour": 19, "minute": 5, "folder": "Rock", "max_volume": 100}
-]
+logger = logging.getLogger(__name__)
 
 
 class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
@@ -34,6 +15,34 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         super(AutoFrontend, self).__init__()
         self.config = config
         self.core = core
+
+        self.base_path = self.config['auto']['base_path']
+        logger.info("Auto base path: %s", self.base_path)
+        self.sections = []
+        section = 0
+
+        exists = "s{}_folder".format(section) in self.config['auto']
+        while exists:
+            self.sections.append({
+                "hour": self.config['auto']["s{}_hour".format(section)],
+                "minute": self.config['auto']["s{}_minute".format(section)],
+                "folder": self.config['auto']["s{}_folder".format(section)],
+                "max_volume": self.config['auto']["s{}_max_volume".format(section)]
+            })
+            section += 1
+            exists = "s{}_folder".format(section) in self.config['auto']
+
+        if not self.sections:
+            logger.error('Could not find any auto sections')
+        else:
+            logger.info('Found the following auto sections:')
+            for section in self.sections:
+                logger.info("Start: %02d:%02d Folder: %s, Max Volume: %d%%",
+                            section['hour'],
+                            section['minute'],
+                            section['folder'],
+                            section['max_volume']
+                )
 
     def tracklist_changed(self):
         if self.core.tracklist.get_length().get() == 0:
@@ -44,18 +53,17 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
             self.play_random_album()
 
     def play_random_album(self):
-        print("Play random album")
         section = self.get_section_by_time()
-        print(section)
-        uri = base_path + section['folder']
+        logger.info("Auto play of random album, folder: %s", section['folder'])
+        uri = self.base_path + section['folder']
         tracks = self.get_random_album(uri)
         self.play_uris(tracks)
 
     def get_section_by_time(self):
         now = datetime.datetime.now()
 
-        for section in reversed(sections):
-            if now.hour >= section['hour'] and now.minute >=  section['minute']:
+        for section in reversed(self.sections):
+            if now.hour >= section['hour'] and now.minute >= section['minute']:
                 return section
 
         return None

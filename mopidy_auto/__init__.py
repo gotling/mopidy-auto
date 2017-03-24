@@ -24,9 +24,12 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        # TODO: Comment in and edit, or remove entirely
-        #schema['username'] = config.String()
-        #schema['password'] = config.Secret()
+        schema['base_path'] = config.String()
+        for index in range(3):
+            schema["s{}_hour".format(index)] = config.Integer()
+            schema["s{}_minute".format(index)] = config.Integer()
+            schema["s{}_folder".format(index)] = config.String()
+            schema["s{}_max_volume".format(index)] = config.Integer()
         return schema
 
     def setup(self, registry):
