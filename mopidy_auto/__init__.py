@@ -27,6 +27,7 @@ class Extension(ext.Extension):
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
         schema['base_path'] = config.String()
+        schema['max_tracks'] = config.Integer()
         for index in range(3):
             schema["s{}_hour".format(index)] = config.Integer()
             schema["s{}_minute".format(index)] = config.Integer()

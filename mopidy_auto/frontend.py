@@ -4,6 +4,7 @@ import datetime
 
 import logging
 import pykka
+import sys
 
 from mopidy import core
 
@@ -19,7 +20,12 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         self.history = []
 
         self.base_path = self.config['auto']['base_path']
-        logger.info("Auto base path: %s", self.base_path)
+        self.max_tracks = self.config['auto']['max_tracks']
+        if self.max_tracks <= 0:
+            self.max_tracks = sys.maxsize
+
+        logger.info("Auto base path: %s, max tracks: %d", self.base_path, self.max_tracks)
+
         self.sections = []
         section = 0
 
@@ -82,6 +88,9 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         for ref in refs:
             if ref.type == 'track':
                 track_uris.append(ref.uri)
+                if len(track_uris) >= self.max_tracks:
+                    logger.info("Reached maximum tracks from same folder: %d", self.max_tracks)
+                    break
 
         if len(track_uris) > 0:
             self.history.append(uri)
