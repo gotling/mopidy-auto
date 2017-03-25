@@ -48,8 +48,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
                             section['hour'],
                             section['minute'],
                             section['folder'],
-                            section['max_volume']
-                )
+                            section['max_volume'])
 
     def tracklist_changed(self):
         if self.core.tracklist.get_length().get() == 0:
