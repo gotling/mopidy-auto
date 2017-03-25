@@ -3,8 +3,9 @@ from __future__ import unicode_literals
 import logging
 import os
 
-import tornado.web
 from mopidy import config, ext
+
+import tornado.web
 
 from .web import IndexHandler, VolumeHandler
 

@@ -1,10 +1,7 @@
 from __future__ import unicode_literals
 
-import unittest
 
-from mopidy import core
-
-from mopidy_auto import Extension, frontend as frontend_lib
+from mopidy_auto import Extension
 
 
 def test_get_default_config():
@@ -29,8 +26,3 @@ def test_get_config_schema():
         assert "s{}_max_volume".format(index) in schema
 
 # TODO Write more test
-
-
-#def test_get_album(self):
-#    self.core = core.Core.start(
-#        config, backends=[get_backend(config)]).proxy()

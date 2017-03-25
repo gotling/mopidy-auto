@@ -1,12 +1,11 @@
-import random
-
 import datetime
-
 import logging
-import pykka
+import random
 import sys
 
 from mopidy import core
+
+import pykka
 
 logger = logging.getLogger(__name__)
 

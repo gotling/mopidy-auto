@@ -19,5 +19,4 @@ class VolumeHandler(tornado.web.RequestHandler):
         self.core = core
 
     def get(self):
-        #self.core.mixer.get_volume().get()
         self.write("{}".format(80))
