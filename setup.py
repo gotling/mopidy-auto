@@ -18,7 +18,7 @@ setup(
     license='MIT License',
     author='Marcus Gotling',
     author_email='marcus@gotling.se',
-    description='Mopidy plugin to automate music playback',
+    description='Mopidy plugin to automate music playback based on time of day',
     long_description=open('README.rst').read(),
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,
@@ -38,7 +38,7 @@ setup(
         'Intended Audience :: End Users/Desktop',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
-        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 2',
         'Topic :: Multimedia :: Sound/Audio :: Players',
     ],
 )

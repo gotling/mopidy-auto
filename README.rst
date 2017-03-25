@@ -46,15 +46,9 @@ It also has a volume control.
 Installation
 ============
 
-    ! NOT YET
-
 Install by running::
 
     pip install Mopidy-Auto
-
-Or, if available, install the Debian/Ubuntu package from `apt.mopidy.com
-<http://apt.mopidy.com/>`_.
-
 
 Configuration
 =============
@@ -100,7 +94,7 @@ Project resources
 Changelog
 =========
 
-v0.1.0 (UNRELEASED)
+v0.1.0
 ----------------------------------------
 
 - Initial release.
