@@ -14,7 +14,33 @@ Mopidy-Auto
    :target: https://coveralls.io/r/gotling/mopidy-auto
    :alt: Test coverage
 
-Mopidy plugin to automate music playback
+Mopidy plugin to automate music playback.
+
+Can be used in restaurants to play fitting music depending on time of day with no user input required.
+
+Only tested with *file* backend.
+
+Consists of a frontend and simple web client.
+
+Frontend
+========
+
+If no tracks are playing and a play event is received, or if playback ends, a random album will be added to the
+tracklist and playback started.
+
+Album is chosen from one of 3 sections, based on time of day. After an album has been played, it will not play again
+until all other albums in it's section has been played.
+
+If volume is set higher than what is configured for the section, it will be lowered before playback starts.
+
+Web Client
+==========
+
+The web client is reached on url `/auto/`. It shows which track, artist and album is playing.
+
+It has 2 buttons: **Play / Pause** and **Skip to next track**.
+
+It also has a volume control.
 
 
 Installation
@@ -34,7 +60,7 @@ Configuration
 =============
 
 Before starting Mopidy, you must add configuration for
-Mopidy-Auto to your Mopidy configuration file::
+Mopidy-Auto to your Mopidy configuration file:
 
     [auto]
     enabled = true
