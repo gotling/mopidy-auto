@@ -38,7 +38,7 @@ Web Client
 
 The web client is reached on url `/auto/`. It shows which track, artist and album is playing.
 
-It has 2 buttons: **Play / Pause** and **Skip to next track**.
+It has 3 buttons: **Play / Pause**, skip to **next track** and skip to **next album**.
 
 It also has a volume control.
 
@@ -93,6 +93,13 @@ Project resources
 
 Changelog
 =========
+
+v0.2.0
+------
+
+- Added skip to next album.
+- History is stored per section.
+
 
 v0.1.0
 ------
