@@ -78,7 +78,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # Find a random album from this sections URI
         uri = self.base_path + section['folder']
         tracks = self.get_random_album(uri, section_index)
-        
+
         # and play it's tracks
         self.play_uris(tracks)
 
