@@ -41,6 +41,7 @@ body {
 img {
     max-width: 384px;
     width: 70%;
+    max-height: 50vh;
 }
 
 .action {
