@@ -97,8 +97,8 @@ Changelog
 v0.2.0 **UNRELEASED**
 ------
 
-- Added skip to next album [#5](../../issues/5)
-- History is stored per section [#6](../../issues/6)
+- Added skip to next album - `#5 <../../issues/5>`_
+- History is stored per section - `#6 <../../issues/6>`_
 
 
 v0.1.0
