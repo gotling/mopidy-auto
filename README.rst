@@ -18,7 +18,7 @@ Mopidy extension to automate music playback.
 
 Can be used in restaurants to play fitting music depending on time of day with no user input required.
 
-Only tested with *file* backend.
+Only tested with *file://* backend.
 
 Consists of a frontend and simple web client.
 
@@ -95,6 +95,6 @@ Changelog
 =========
 
 v0.1.0
-----------------------------------------
+------
 
 - Initial release.
