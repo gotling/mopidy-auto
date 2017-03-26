@@ -18,7 +18,7 @@ setup(
     license='MIT License',
     author='Marcus Gotling',
     author_email='marcus@gotling.se',
-    description='Mopidy plugin to automate music playback based on time of day',
+    description='Mopidy extension to automate music playback based on time of day',
     long_description=open('README.rst').read(),
     packages=find_packages(exclude=['tests', 'tests.*']),
     zip_safe=False,

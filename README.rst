@@ -14,7 +14,7 @@ Mopidy-Auto
    :target: https://coveralls.io/r/gotling/mopidy-auto
    :alt: Test coverage
 
-Mopidy plugin to automate music playback.
+Mopidy extension to automate music playback.
 
 Can be used in restaurants to play fitting music depending on time of day with no user input required.
 
