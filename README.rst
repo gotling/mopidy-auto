@@ -94,7 +94,7 @@ Project resources
 Changelog
 =========
 
-v0.2.0
+v0.2.0 **UNRELEASED**
 ------
 
 - Added skip to next album.
