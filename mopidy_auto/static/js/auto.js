@@ -4,23 +4,28 @@ var mopidy = new Mopidy();
 ** BINDING
 **/
 
+// Logging of all events to JS console
 mopidy.on(console.log.bind(console));
 
 mopidy.on("state:online", function () {
+   // Set buttons depending on state playing or paused/stopped
    mopidy.playback.getState().done(function(state) {
       toggleButtons(state);
    });
+   // Update track information
    mopidy.playback.getCurrentTrack().done(function(track) {
       if (track) {
          updateCurrentTrack(track);
       }
    });
+   // Update volume position
    mopidy.playback.getVolume().done(function(volume) {
       setVolumeUi(volume);
    });
 });
 
 $('#play').on('click', function() {
+   // If tracklist is empty like on startup, trigger clear event to add random album to list
    mopidy.tracklist.getLength().done(function(length) {
       console.log(length);
       if (length === 0) {
@@ -40,6 +45,7 @@ $('#next-track').on('click', function() {
    mopidy.playback.next();
 });
 
+// By clearing tracklist, a random one will be added and played
 $('#next-album').on('click', function() {
    mopidy.tracklist.clear();
 });
