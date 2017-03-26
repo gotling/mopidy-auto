@@ -58,9 +58,15 @@ img {
     font-weight: bold;
 }
 
+.description {
+    position: relative;
+    top: -4vw;
+}
+
 #volume {
     margin-bottom: 4em;
 }
+
 
 /*
 ** SLIDER

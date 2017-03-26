@@ -36,8 +36,12 @@ $('#pause').on('click', function() {
    mopidy.playback.pause();
 });
 
-$('#next').on('click', function() {
+$('#next-track').on('click', function() {
    mopidy.playback.next();
+});
+
+$('#next-album').on('click', function() {
+   mopidy.tracklist.clear();
 });
 
 $('#volume').on('change', function() {
@@ -77,12 +81,12 @@ function setVolumeUi(volume) {
 
 function toggleButtons(state) {
    if (state === 'playing') {
-      $('#play').hide();
-      $('#next').removeClass('disabled');
-      $('#pause').show();
+      $('#play-div').hide();
+      $('#pause-div').show();
+      $('.next-button').removeClass('disabled');
    } else {
-      $('#play').show();
-      $('#next').addClass('disabled');
-      $('#pause').hide();
+      $('#play-div').show();
+      $('#pause-div').hide();
+      $('.next-button').addClass('disabled');
    }
 }
