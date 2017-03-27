@@ -45,9 +45,7 @@ mopidy.on("state:online", function () {
 $('#play').on('click', function() {
    // If tracklist is empty like on startup, trigger clear event to add random album to list
    mopidy.tracklist.getLength().done(function(length) {
-      console.log(length);
       if (length === 0) {
-         console.log('Track list is empty');
          mopidy.tracklist.clear();
       }
    });
