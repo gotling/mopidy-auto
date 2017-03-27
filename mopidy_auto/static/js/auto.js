@@ -29,8 +29,7 @@ mopidy.on("state:online", function () {
 
    // Update track position
     mopidy.playback.getTimePosition().done(function(timePosition) {
-       trackPosition = timePosition;
-       trackPositionTimer = setInterval(updateCurrentTrackPosition, 1000);
+       startTimeTicker(timePosition);
     });
 
    // Update volume position
@@ -76,14 +75,14 @@ $('#volume').on('change', function() {
 
 mopidy.on('event:playbackStateChanged', function(event) {
    toggleButtons(event.new_state);
-   clearInterval(trackPositionTimer);
+   stopTimeTicker();
 });
 
 mopidy.on("event:trackPlaybackStarted", function(event) {
    updateCurrentTrack(event.tl_track.track);
    trackPosition = 0;
    updateCurrentTrackPosition();
-   trackPositionTimer = setInterval(updateCurrentTrackPosition, 1000);
+   startTimeTicker(event.time_position)
 });
 
 mopidy.on('event:volumeChanged', function(event) {
@@ -92,8 +91,7 @@ mopidy.on('event:volumeChanged', function(event) {
 
 mopidy.on('event:trackPlaybackResumed', function(event) {
    updateCurrentTrack(event.tl_track.track);
-   trackPosition = event.time_position;
-   trackPositionTimer = setInterval(updateCurrentTrackPosition, 1000);
+   startTimeTicker(event.time_position)
 });
 
 mopidy.on('event:seeked', function(event) {
@@ -102,7 +100,7 @@ mopidy.on('event:seeked', function(event) {
 });
 
 mopidy.on('event:trackPlaybackPaused', function(event) {
-   clearInterval(trackPositionTimer);
+   stopTimeTicker();
 });
 
 /*
@@ -116,11 +114,12 @@ function updateCurrentTrack(track) {
 
    $('#track-length').text(msToTimeString(track.length));
 }
-
+/*
 function updateCurrentTrackPosition() {
    $('#track-position').text(msToTimeString(trackPosition));
    trackPosition += 1000;
 }
+*/
 
 function setVolumeUi(volume) {
    $('#volume').val(volume);
@@ -136,6 +135,33 @@ function toggleButtons(state) {
       $('#pause-div').hide();
       $('.next-button').addClass('disabled');
    }
+}
+
+var interval = 1000; // ms
+var expected = Date.now() + interval;
+
+function updateCurrentTrackPosition() {
+    var dt = Date.now() - expected; // the drift (positive for overshooting)
+    if (dt > interval) {
+    }
+
+    $('#track-position').text(msToTimeString(trackPosition));
+
+    expected += interval;
+    trackPosition += interval;
+    trackPositionTimer = setTimeout(updateCurrentTrackPosition, Math.max(0, interval - dt)); // take into account drift
+}
+
+function startTimeTicker(startValue) {
+    if (startValue) {
+        trackPosition = startValue;
+    }
+
+    trackPositionTimer = setTimeout(updateCurrentTrackPosition, interval);
+}
+
+function stopTimeTicker() {
+    clearTimeout(trackPositionTimer);
 }
 
 /*
