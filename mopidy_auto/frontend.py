@@ -19,6 +19,9 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # One history per section
         self.history = {0: [], 1: [], 2: []}
 
+        # Keep track of the current playing section
+        self.section = None
+
         # Where sections folders are located
         self.base_path = self.config['auto']['base_path']
 
@@ -61,22 +64,33 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         if self.core.tracklist.get_length().get() == 0:
             self.play_random_album()
 
-    # If playback has stopped on the last track of the tracklist, play a random album
+    # If playback has stopped,
     def track_playback_ended(self, tl_track, time_position):
+        # on the last track of the tracklist, play a random album
         if self.core.tracklist.index(tl_track).get() == self.core.tracklist.get_length().get() - 1:
+            self.play_random_album()
+        # and time is in new section, play random album
+        elif self.section != self.get_section_by_time()[1]:
+            logger.info("Time has changed to new section, play random album")
+            self.play_random_album()
+
+    # When resuming playback, check that time still in correct section, otherwise play new random album
+    def track_playback_resumed(self, tl_track, time_position):
+        if self.section != self.get_section_by_time()[1]:
+            logger.info("Time has changed to new section, play random album")
             self.play_random_album()
 
     # Functions
     def play_random_album(self):
-        section_index, section = self.get_section_by_time()
-        logger.info("Auto play of random album, folder: %s", section['folder'])
+        section_index, self.section = self.get_section_by_time()
+        logger.info("Auto play of random album, folder: %s", self.section['folder'])
 
         # Decrease volume if it's higher than sections max_volume
-        if self.core.mixer.get_volume().get() > section['max_volume']:
-            self.core.mixer.set_volume(section['max_volume'])
+        if self.core.mixer.get_volume().get() > self.section['max_volume']:
+            self.core.mixer.set_volume(self.section['max_volume'])
 
         # Find a random album from this sections URI
-        uri = self.base_path + section['folder']
+        uri = self.base_path + self.section['folder']
         tracks = self.get_random_album(uri, section_index)
 
         # and play it's tracks
@@ -123,14 +137,14 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
     def play_uris(self, uris):
         logger.info("Found %d tracks", len(uris))
 
-        # Save index of last played track
-        index = self.core.tracklist.get_length().get()
+        # Clear tracklist
+        self.core.tracklist.clear()
 
         # Add all tracks by URIs
         self.core.tracklist.add(uris=uris)
 
-        # Start playing from last position plus one
-        self.core.playback.play(tlid=index + 1)
+        # Start playing
+        self.core.playback.play()
 
     def get_unplayed_directories(self, refs, section_index):
         # Get all directories that are not in this sections history

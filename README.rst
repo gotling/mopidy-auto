@@ -97,6 +97,7 @@ Changelog
 v0.2.0 **UNRELEASED**
 ------
 
+- Play album from new section when its time is reached - `#8 <../../issues/8>`_
 - Added skip to next album - `#5 <../../issues/5>`_
 - History is stored per section - `#6 <../../issues/6>`_
 
