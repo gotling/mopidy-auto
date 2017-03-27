@@ -14,7 +14,7 @@ Mopidy-Auto
    :target: https://coveralls.io/r/gotling/mopidy-auto
    :alt: Test coverage
 
-Mopidy extension to automate music playback.
+Mopidy extension to automate music playback based on time of day.
 
 Can be used in restaurants to play fitting music depending on time of day with no user input required.
 
@@ -97,8 +97,8 @@ Project resources
 Changelog
 =========
 
-v0.2.0 **UNRELEASED**
-------
+0.2.0
+-----
 
 - Display time of current playing track - `#9 <../../issues/9>`_
 - Play album from new section when its time is reached - `#8 <../../issues/8>`_
@@ -106,7 +106,7 @@ v0.2.0 **UNRELEASED**
 - History is stored per section - `#6 <../../issues/6>`_
 
 
-v0.1.0
-------
+0.1.0
+-----
 
 - Initial release.
