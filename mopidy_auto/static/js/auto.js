@@ -4,6 +4,9 @@ var mopidy = new Mopidy();
 ** GLOBALS
 **/
 
+// For timer
+var interval;
+var expected;
 var trackPosition = 0;
 var trackPositionTimer;
 
@@ -27,9 +30,10 @@ mopidy.on("state:online", function () {
       }
    });
 
-   // Update track position
+    // Update track position
     mopidy.playback.getTimePosition().done(function(timePosition) {
-       startTimeTicker(timePosition);
+        $('#track-position').text(msToTimeString(timePosition));
+       //startTimeTicker(timePosition);
     });
 
    // Update volume position
@@ -81,7 +85,6 @@ mopidy.on('event:playbackStateChanged', function(event) {
 mopidy.on("event:trackPlaybackStarted", function(event) {
    updateCurrentTrack(event.tl_track.track);
    trackPosition = 0;
-   updateCurrentTrackPosition();
    startTimeTicker(event.time_position)
 });
 
@@ -96,7 +99,7 @@ mopidy.on('event:trackPlaybackResumed', function(event) {
 
 mopidy.on('event:seeked', function(event) {
    trackPosition = event.time_position;
-   updateCurrentTrackPosition();
+   $('#track-position').text(msToTimeString(trackPosition));
 });
 
 mopidy.on('event:trackPlaybackPaused', function(event) {
@@ -107,19 +110,25 @@ mopidy.on('event:trackPlaybackPaused', function(event) {
 ** FUNCTIONS
 **/
 
+// Display track info with error handling for empty values
 function updateCurrentTrack(track) {
+    if (!track.name) {
+       track.name = {"name": "Unknown"}
+   }
    $('#current-track').text(track.name);
+
+   if (!track.artists) {
+       track.artists = [{"name": "Unknown"}];
+   }
    $('#current-artist').text(track.artists[0].name);
+
+   if (!track.album) {
+       track.album = {"name": "Unknown"}
+   }
    $('#current-album').text(track.album.name);
 
    $('#track-length').text(msToTimeString(track.length));
 }
-/*
-function updateCurrentTrackPosition() {
-   $('#track-position').text(msToTimeString(trackPosition));
-   trackPosition += 1000;
-}
-*/
 
 function setVolumeUi(volume) {
    $('#volume').val(volume);
@@ -137,25 +146,34 @@ function toggleButtons(state) {
    }
 }
 
-var interval = 1000; // ms
-var expected = Date.now() + interval;
-
+// Update track position, check if timer has drifted and adjust accordingly
 function updateCurrentTrackPosition() {
-    var dt = Date.now() - expected; // the drift (positive for overshooting)
+    // The drift (positive for overshooting)
+    var dt = Date.now() - expected;
     if (dt > interval) {
+        // If drifted more than 1 second, get correct value from Mopidy
+        mopidy.playback.getTimePosition().done(function(timePosition) {
+            trackPosition = timePosition;
+        });
     }
 
     $('#track-position').text(msToTimeString(trackPosition));
 
     expected += interval;
     trackPosition += interval;
-    trackPositionTimer = setTimeout(updateCurrentTrackPosition, Math.max(0, interval - dt)); // take into account drift
+    // Restart timeout, taking drift into account
+    trackPositionTimer = setTimeout(updateCurrentTrackPosition, Math.max(0, interval - dt));
 }
 
 function startTimeTicker(startValue) {
     if (startValue) {
         trackPosition = startValue;
     }
+
+    // Call update function every ms
+    interval = 1000;
+    // Variable to check how much timer is drifting
+    expected = Date.now() + interval;
 
     trackPositionTimer = setTimeout(updateCurrentTrackPosition, interval);
 }
