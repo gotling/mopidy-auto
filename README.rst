@@ -100,10 +100,10 @@ Changelog
 0.2.0
 -----
 
-- Display time of current playing track - `#9 <../../issues/9>`_
-- Play album from new section when its time is reached - `#8 <../../issues/8>`_
-- Added skip to next album - `#5 <../../issues/5>`_
-- History is stored per section - `#6 <../../issues/6>`_
+- Display time of current playing track - `#9 <https://github.com/gotling/mopidy-auto/issues/9>`_
+- Play album from new section when its time is reached - `#8 <https://github.com/gotling/mopidy-auto/issues/8>`_
+- Added skip to next album - `#5 <https://github.com/gotling/mopidy-auto/issues/5>`_
+- History is stored per section - `#6 <https://github.com/gotling/mopidy-auto/issues/6>`_
 
 
 0.1.0
