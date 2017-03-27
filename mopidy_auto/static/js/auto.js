@@ -32,8 +32,7 @@ mopidy.on("state:online", function () {
 
     // Update track position
     mopidy.playback.getTimePosition().done(function(timePosition) {
-        $('#track-position').text(msToTimeString(timePosition));
-       //startTimeTicker(timePosition);
+        setTrackPosition(timePosition);
     });
 
    // Update volume position
@@ -82,7 +81,7 @@ mopidy.on('event:playbackStateChanged', function(event) {
 
 mopidy.on("event:trackPlaybackStarted", function(event) {
    updateCurrentTrack(event.tl_track.track);
-   trackPosition = 0;
+   setTrackPosition(0);
    startTimeTicker(event.time_position)
 });
 
@@ -96,8 +95,7 @@ mopidy.on('event:trackPlaybackResumed', function(event) {
 });
 
 mopidy.on('event:seeked', function(event) {
-   trackPosition = event.time_position;
-   $('#track-position').text(msToTimeString(trackPosition));
+   setTrackPosition(event.time_position);
 });
 
 mopidy.on('event:trackPlaybackPaused', function(event) {
@@ -128,6 +126,13 @@ function updateCurrentTrack(track) {
    $('#track-length').text(msToTimeString(track.length));
 }
 
+function setTrackPosition(newPosition) {
+    if (newPosition || newPosition === 0) {
+        trackPosition = newPosition;
+    }
+    $('#track-position').text(msToTimeString(trackPosition));
+}
+
 function setVolumeUi(volume) {
    $('#volume').val(volume);
 }
@@ -155,7 +160,7 @@ function updateCurrentTrackPosition() {
         });
     }
 
-    $('#track-position').text(msToTimeString(trackPosition));
+    setTrackPosition();
 
     expected += interval;
     trackPosition += interval;
