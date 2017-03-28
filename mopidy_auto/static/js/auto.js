@@ -124,6 +124,8 @@ function updateCurrentTrack(track) {
    $('#current-album').text(track.album.name);
 
    $('#track-length').text(msToTimeString(track.length));
+
+   document.title = track.name + ' - Mopidy Auto';
 }
 
 function setTrackPosition(newPosition) {
