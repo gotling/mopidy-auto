@@ -27,6 +27,7 @@ class Extension(ext.Extension):
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
         schema['base_path'] = config.String()
+        schema['cookie_secret'] = config.String()
         schema['max_tracks'] = config.Integer()
         for index in range(3):
             schema["s{}_hour".format(index)] = config.Integer()
@@ -46,7 +47,7 @@ class Extension(ext.Extension):
 
     def webapp(self, config, core):
         return [
-            (r'/(index.html)?', IndexHandler, dict(core=core)),
+            (r'/(index.html)?', IndexHandler, dict(core=core, config=config)),
             (r'/max_volume', VolumeHandler, dict(core=core)),
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'static')}),
         ]

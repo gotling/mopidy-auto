@@ -47,7 +47,21 @@
     <div class="pure-u-1">
         <input type="range" min="0" max="100" step="10" id="volume" class="slider">
     </div>
+
+    {% if authed %}
+    {% include 'admin.html' %}
+    {% else %}
+        <div id="admin" class="pure-u-1">
+            <div id="admin-unlock">
+                <form id="unlock-form" class="pure-form" method="post">
+                    <input name="password" type="password" placeholder="Key">
+                    <input type="submit" value="Unlock" class="pure-button">
+                </form>
+            </div>
+        </div>
+    {% end %}
 </div>
+
 <script type="text/javascript" src="/mopidy/mopidy.min.js"></script>
 <script type="text/javascript" src="vendor/zepto.js"></script>
 <script type="text/javascript" src="js/auto.js"></script>
