@@ -77,6 +77,12 @@ img.action {
     z-index: 1;
 }
 
+#admin-unlock {
+    position: absolute;
+    bottom: 1vw;
+    right: 1vw;
+    z-index: 1;
+}
 
 /*
 ** SLIDER
