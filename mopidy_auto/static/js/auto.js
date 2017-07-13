@@ -56,13 +56,35 @@ $('#pause').on('click', function() {
    mopidy.playback.pause();
 });
 
+function fadeToNext(type) {
+    var volume;
+    toggleButtons('changing');
+    mopidy.playback.getVolume().done(function(initialVolume) {
+        volume = initialVolume;
+        var timer = setInterval(function () {
+            volume--;
+            mopidy.playback.setVolume(volume);
+            if (volume <= 0) {
+                clearInterval(timer);
+                if (type === 'track') {
+                    mopidy.playback.next();
+                } else {
+                    mopidy.tracklist.clear();
+                }
+
+                mopidy.playback.setVolume(initialVolume);
+            }
+        }, 50);
+    });
+}
+
 $('#next-track').on('click', function() {
-   mopidy.playback.next();
+    fadeToNext('track');
 });
 
 // By clearing tracklist, a random one will be added and played
 $('#next-album').on('click', function() {
-   mopidy.tracklist.clear();
+   fadeToNext('album');
 });
 
 $('#volume').on('change', function() {
@@ -141,13 +163,15 @@ function setVolumeUi(volume) {
 
 function toggleButtons(state) {
    if (state === 'playing') {
-      $('#play-div').hide();
-      $('#pause-div').show();
-      $('.next-button').removeClass('disabled');
+        $('#play-div').hide();
+        $('#pause-div').show();
+        $('.next-button').removeClass('disabled');
+   } else if (state === 'changing') {
+       $('.next-button').addClass('disabled');
    } else {
-      $('#play-div').show();
-      $('#pause-div').hide();
-      $('.next-button').addClass('disabled');
+        $('#play-div').show();
+        $('#pause-div').hide();
+        $('.next-button').addClass('disabled');
    }
 }
 
