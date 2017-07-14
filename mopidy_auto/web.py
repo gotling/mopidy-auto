@@ -21,22 +21,20 @@ class IndexHandler(tornado.web.RequestHandler):
     def post(self, path):
         action = self.get_body_argument("action", False)
         if action:
-            if action == 'delete-track':
-                track = self.core.playback.get_current_track().get()
-                if track:
-                    track_path = urllib.url2pathname(urlparse.urlparse(track.uri.split('file://')[1]).path)
+            track = self.core.playback.get_current_track().get()
+            if track:
+                track_path = urllib.url2pathname(urlparse.urlparse(track.uri.split('file://')[1]).path)
+                if action == 'delete-track':
                     self.core.playback.next()
                     os.unlink(track_path)
                     logger.info("Deleted track '{}'".format(track.name))
-            elif action == 'delete-album':
-                track = self.core.playback.get_current_track().get()
-                if track:
-                    album_path = os.path.dirname(urllib.url2pathname(urlparse.urlparse(track.uri.split('file://')[1]).path))
+                elif action == 'delete-album':
+                    album_path = os.path.dirname(track_path)
                     self.core.tracklist.clear()
                     shutil.rmtree(album_path, True)
                     logger.info("Deleted album '{}'".format(track.album.name))
-            elif action == 'move-album':
-                print('Move current album')
+                elif action == 'move-album':
+                    print('Move current album')
         elif self.get_body_argument("password") == '123':
             self.set_secure_cookie('authed', 'true')
             return self.render('index.html', authed='true')
