@@ -35,9 +35,12 @@ class IndexHandler(tornado.web.RequestHandler):
                     logger.info("Deleted album '{}'".format(track.album.name))
                 elif action == 'move-album':
                     print('Move current album')
+        elif self.get_body_argument('lock', False):
+            self.clear_cookie('authed')
+            return self.render('index.html', authed=False)
         elif self.get_body_argument("password") == '123':
             self.set_secure_cookie('authed', 'true')
-            return self.render('index.html', authed='true')
+            return self.render('index.html', authed=True)
 
         return self.get(path)
 

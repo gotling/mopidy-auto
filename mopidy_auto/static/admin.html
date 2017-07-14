@@ -1,8 +1,14 @@
     <div id="admin" class="pure-u-1">
         <h2>Admin</h2>
         <form method="post">
-        <button type="submit" name="action" value="delete-track" id="delete-track" class="pure-button"><img src="images/ic_delete_black_48px.svg">Delete Track</button>
-        <button type="submit" name="action" value="delete-album" id="delete-album" class="pure-button"><img src="images/ic_delete_black_48px.svg">Delete Album</button>
-        <button type="submit" name="action" value="move-album" id="move-album" class="pure-button"><img src="images/ic_low_priority_black_48px.svg">Move Album</button>
+            <button type="submit" name="action" value="delete-track" id="delete-track" class="pure-button"><img src="images/ic_delete_black_48px.svg">Delete Track</button>
+            <button type="submit" name="action" value="delete-album" id="delete-album" class="pure-button"><img src="images/ic_delete_black_48px.svg">Delete Album</button>
+            <button type="submit" name="action" value="move-album" id="move-album" class="pure-button"><img src="images/ic_low_priority_black_48px.svg">Move Album</button>
         </form>
+
+        <div id="admin-unlock">
+            <form id="unlock-form" class="pure-form" method="post">
+                <input type="submit" name="lock" value="Lock" class="pure-button">
+            </form>
+        </div>
     </div>
