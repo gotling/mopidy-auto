@@ -77,12 +77,20 @@ img.action {
     z-index: 1;
 }
 
+/*
+** ADMIN
+**/
 #admin-unlock {
     position: absolute;
     bottom: 1vw;
     right: 1vw;
     z-index: 1;
 }
+
+#admin button img {
+    vertical-align: middle;
+}
+
 
 /*
 ** SLIDER
