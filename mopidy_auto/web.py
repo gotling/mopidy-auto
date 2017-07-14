@@ -1,10 +1,10 @@
+import logging
 import os
 import shutil
-import logging
 import urllib
 import urlparse
-import tornado.web
 
+import tornado.web
 
 logger = logging.getLogger(__name__)
 
