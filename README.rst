@@ -97,6 +97,16 @@ Project resources
 Changelog
 =========
 
+0.3.0
+-----
+
+- Change next track and album buttons
+- Change volume step to 5%
+- Fade out volume when changing track - `#13 <https://github.com/gotling/mopidy-auto/issues/13>`_
+- Added admin mode with restricted functions - `#1 <https://github.com/gotling/mopidy-auto/issues/1>`_
+- Added delete track - `#2 <https://github.com/gotling/mopidy-auto/issues/2>`_
+- Added delete album - `#3 <https://github.com/gotling/mopidy-auto/issues/3>`_
+
 0.2.0
 -----
 
