@@ -26,13 +26,19 @@ class IndexHandler(tornado.web.RequestHandler):
                 track_path = urllib.url2pathname(urlparse.urlparse(track.uri.split('file://')[1]).path)
                 if action == 'delete-track':
                     self.core.playback.next()
-                    os.unlink(track_path)
-                    logger.info("Deleted track '{}'".format(track.name))
+                    try:
+                        os.remove(track_path)
+                        logger.info("Deleted track '{}'".format(track.name))
+                    except OSError:
+                        logger.error("Could not delete track '{}'".format(track.name), exc_info=1)
                 elif action == 'delete-album':
                     album_path = os.path.dirname(track_path)
                     self.core.tracklist.clear()
-                    shutil.rmtree(album_path, True)
-                    logger.info("Deleted album '{}'".format(track.album.name))
+                    try:
+                        shutil.rmtree(album_path, True)
+                        logger.info("Deleted album '{}'".format(track.album.name))
+                    except shutil.Error:
+                        logger.error("Could not delete album '{}'".format(track.album.name), exc_info=1)
                 elif action == 'move-album':
                     print('Move current album')
         elif self.get_body_argument('lock', False):
