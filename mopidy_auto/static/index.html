@@ -53,9 +53,13 @@
     {% else %}
         <div id="admin" class="pure-u-1">
             <div id="admin-unlock">
-                <form id="unlock-form" class="pure-form" method="post">
-                    <input name="password" type="password" placeholder="Key">
-                    <input type="submit" value="Unlock" class="pure-button">
+                <form id="unlock-form" class="pure-form pure-g" method="post">
+                    <div class="pure-u-1-2">
+                        <input name="password" type="password" placeholder="Key" class="pure-input-1">
+                    </div>
+                    <div class="pure-u-1-2">
+                        <input type="submit" value="Unlock" class="pure-button pure-input-1">
+                    </div>
                 </form>
             </div>
         </div>
