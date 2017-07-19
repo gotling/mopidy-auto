@@ -103,8 +103,9 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         for section in reversed(self.sections):
             logger.info('Get section by time: {}:{} > {}:{}? {}'
                         .format(now.hour, now.minute, section['hour'], section['minute'],
-                                now.hour >= section['hour'] and now.minute >= section['minute']))
-            if now.hour >= section['hour'] and now.minute >= section['minute']:
+                                now.hour > section['hour'] or
+                                (now.hour == section['hour'] and now.minute >= section['minute'])))
+            if now.hour > section['hour'] or (now.hour == section['hour'] and now.minute >= section['minute']):
                 return self.sections.index(section), section
 
         return None
