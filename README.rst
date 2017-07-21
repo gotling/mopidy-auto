@@ -45,6 +45,7 @@ It has 3 buttons: **Play / Pause**, skip to **next track** and skip to **next al
 
 It also has a volume control.
 
+By logging in with admin key current playing track or album can be deleted.
 
 Installation
 ============
