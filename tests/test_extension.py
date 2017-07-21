@@ -20,8 +20,7 @@ def test_get_config_schema():
     assert 'base_path' in schema
     assert 'max_tracks' in schema
     for index in range(3):
-        assert "s{}_hour".format(index) in schema
-        assert "s{}_minute".format(index) in schema
+        assert "s{}_start".format(index) in schema
         assert "s{}_folder".format(index) in schema
         assert "s{}_max_volume".format(index) in schema
 

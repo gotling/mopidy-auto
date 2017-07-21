@@ -30,8 +30,7 @@ class Extension(ext.Extension):
         schema['cookie_secret'] = config.String()
         schema['max_tracks'] = config.Integer()
         for index in range(3):
-            schema["s{}_hour".format(index)] = config.Integer()
-            schema["s{}_minute".format(index)] = config.Integer()
+            schema["s{}_start".format(index)] = config.String()
             schema["s{}_folder".format(index)] = config.String()
             schema["s{}_max_volume".format(index)] = config.Integer()
         return schema

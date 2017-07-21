@@ -39,8 +39,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         exists = "s{}_folder".format(section) in self.config['auto']
         while exists:
             self.sections.append({
-                "hour": self.config['auto']["s{}_hour".format(section)],
-                "minute": self.config['auto']["s{}_minute".format(section)],
+                "start": self.config['auto']["s{}_start".format(section)],
                 "folder": self.config['auto']["s{}_folder".format(section)],
                 "max_volume": self.config['auto']["s{}_max_volume".format(section)]
             })
@@ -52,9 +51,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         else:
             logger.info('Found the following auto sections:')
             for section in self.sections:
-                logger.info("Start: %02d:%02d Folder: %s, Max Volume: %d%%",
-                            section['hour'],
-                            section['minute'],
+                logger.info("Start: %s Folder: %s, Max Volume: %d%%",
+                            section['start'],
                             section['folder'],
                             section['max_volume'])
 
@@ -98,14 +96,15 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
     def get_section_by_time(self):
         now = datetime.datetime.now()
+        now_minutes = now.hour * 60 + now.minute
 
         # Loop through sections in reverse to find the most accurate section
         for section in reversed(self.sections):
-            logger.info('Get section by time: {}:{} > {}:{}? {}'
-                        .format(now.hour, now.minute, section['hour'], section['minute'],
-                                now.hour > section['hour'] or
-                                (now.hour == section['hour'] and now.minute >= section['minute'])))
-            if now.hour > section['hour'] or (now.hour == section['hour'] and now.minute >= section['minute']):
+            section_start = section['start'].split(':')
+            section_minutes = int(section_start[0]) * 60 + int(section_start[1])
+            logger.info('Get section by time: {} >= {}? {}'
+                        .format(now_minutes, section_minutes, now_minutes >= section_minutes))
+            if now_minutes >= section_minutes:
                 return self.sections.index(section), section
 
         return None
@@ -134,6 +133,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
         # If not, limit refs to unplayed ones
         refs = self.get_unplayed_directories(refs, section_index)
+
         #  and recursively get a random one
         rand_idx = random.randint(0, len(refs) - 1)
         return self.get_random_album(refs[rand_idx].uri, section_index)
@@ -158,10 +158,10 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         if len(unplayed) == 0:
             logger.info("Unique albums depleted. Clearing history")
 
-            #  Return a list containing all albums except the last one played
+            # Return a list containing all albums except the last one played
             unplayed = [x for x in refs if x.uri != self.history[section_index][-1]]
 
-            #  And clear the sections history
+            # And clear the sections history
             self.history[section_index] = []
 
         return unplayed

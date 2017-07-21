@@ -70,20 +70,17 @@ Mopidy-Auto to your Mopidy configuration file::
 
   # Sections of different music activated depending on time of day. Currently locked to 3
   # At what time this section gets active
-  s0_hour = 0
-  s0_minute = 0
+  s0_start = 00:00
   # Folder name in where to find albums
   s0_folder = Rap
   # Decrease volume to this level if it is set higher when new folder is being played
   s0_max_volume = 50
 
-  s1_hour = 11
-  s1_minute = 0
+  s1_start = 11:00
   s1_folder = Trip Hop
   s1_max_volume = 80
 
-  s2_hour = 18
-  s2_minute = 30
+  s2_start = 18:30
   s2_folder = Rock
   s2_max_volume = 80
 
@@ -100,6 +97,7 @@ Changelog
 0.3.0
 -----
 
+- Change start time setting from sX_hour + sX_minute to sX_start with format hh:mm
 - Change next track and album buttons
 - Change volume step to 5%
 - Fade out volume when changing track - `#13 <https://github.com/gotling/mopidy-auto/issues/13>`_
