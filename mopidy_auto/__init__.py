@@ -26,8 +26,9 @@ class Extension(ext.Extension):
 
     def get_config_schema(self):
         schema = super(Extension, self).get_config_schema()
-        schema['base_path'] = config.String()
+        schema['admin_key'] = config.String()
         schema['cookie_secret'] = config.String()
+        schema['base_path'] = config.String()
         schema['max_tracks'] = config.Integer()
         for index in range(3):
             schema["s{}_start".format(index)] = config.String()

@@ -62,6 +62,9 @@ Mopidy-Auto to your Mopidy configuration file::
   [auto]
   enabled = true
 
+  # Key required to access admin section
+  admin_key = 123
+
   # URI where the sections folders are located
   base_path = file:///Users/marcus/Media/Music/
 

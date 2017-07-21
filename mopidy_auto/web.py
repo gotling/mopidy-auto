@@ -44,7 +44,7 @@ class IndexHandler(tornado.web.RequestHandler):
         elif self.get_body_argument('lock', False):
             self.clear_cookie('authed')
             return self.render('index.html', authed=False)
-        elif self.get_body_argument("password") == '123':
+        elif self.get_body_argument("password") == self.config['auto']['admin_key']:
             self.set_secure_cookie('authed', 'true')
             return self.render('index.html', authed=True)
 

@@ -17,6 +17,7 @@ def test_get_config_schema():
     ext = Extension()
 
     schema = ext.get_config_schema()
+    assert 'admin_key' in schema
     assert 'base_path' in schema
     assert 'max_tracks' in schema
     for index in range(3):
