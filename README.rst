@@ -91,7 +91,7 @@ Mopidy-Auto to your Mopidy configuration file::
 Recommend File backend configuration
 ====================================
 
-To make sure playback does not stop due to file types unhandled by Mopidy this exclude works well:
+To make sure playback does not stop due to file types unhandled by Mopidy this exclude works well::
 
   [file]
   ...
