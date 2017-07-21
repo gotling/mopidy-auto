@@ -84,6 +84,37 @@ Mopidy-Auto to your Mopidy configuration file::
   s2_folder = Rock
   s2_max_volume = 80
 
+
+Recommend File backend configuration
+====================================
+
+To make sure playback does not stop due to file types unhandled by Mopidy this exclude works well:
+
+  [file]
+  ...
+  excluded_file_extensions =
+    .nfo
+    .ini
+    .db
+    .rtf
+    .jpg
+    .jpeg
+    .png
+    .gif
+    .log
+    .dat
+    .txt
+    .sfv
+    .pls
+    .m3u
+    .wma
+    .mpc
+    .htm
+    .html
+    .aac
+    .m4a
+    .sfk
+
 Project resources
 =================
 
