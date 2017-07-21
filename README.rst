@@ -66,7 +66,7 @@ Mopidy-Auto to your Mopidy configuration file::
   admin_key = 123
 
   # URI where the sections folders are located
-  base_path = file:///Users/marcus/Media/Music/
+  base_path = file:///media/Music/
 
   # Max number of tracks that can be added from one folder. Set to 0 or lower to disable limit
   max_tracks = 15
