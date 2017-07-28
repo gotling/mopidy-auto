@@ -7,7 +7,7 @@ from mopidy import config, ext
 
 import tornado.web
 
-from .web import IndexHandler, VolumeHandler, MoveHandler
+from .web import IndexHandler, MoveHandler, VolumeHandler
 
 __version__ = '0.3.0'
 
