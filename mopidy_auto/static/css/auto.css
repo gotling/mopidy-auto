@@ -87,13 +87,13 @@ img.action {
     z-index: 1;
 }
 
-#admin button {
+#admin button, #admin a {
     max-width: 45%;
     white-space: normal;
     padding: 0.5em;
 }
 
-#admin button img {
+#admin button img, #admin a img {
     vertical-align: middle;
     max-width: 10vw;
 }
