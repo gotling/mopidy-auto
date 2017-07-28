@@ -7,7 +7,7 @@ from mopidy import config, ext
 
 import tornado.web
 
-from .web import IndexHandler, VolumeHandler
+from .web import IndexHandler, VolumeHandler, MoveHandler
 
 __version__ = '0.3.0'
 
@@ -48,6 +48,7 @@ class Extension(ext.Extension):
     def webapp(self, config, core):
         return [
             (r'/(index.html)?', IndexHandler, dict(core=core, config=config)),
+            (r'/move', MoveHandler, dict(core=core, config=config)),
             (r'/max_volume', VolumeHandler, dict(core=core)),
             (r'/(.*)', tornado.web.StaticFileHandler, {'path': os.path.join(os.path.dirname(__file__), 'static')}),
         ]
