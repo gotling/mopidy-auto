@@ -7,6 +7,8 @@ from mopidy import core
 
 import pykka
 
+import mopidy_auto
+
 logger = logging.getLogger(__name__)
 
 
@@ -30,6 +32,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         if self.max_tracks <= 0:
             self.max_tracks = sys.maxsize
 
+        logger.info("Mopidy-Auto v%s", mopidy_auto.__version__)
         logger.info("Auto base path: %s, max tracks: %d", self.base_path, self.max_tracks)
 
         # Read all section config to an array. Ready for dynamic amount of sections
