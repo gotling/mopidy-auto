@@ -110,7 +110,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
             section_start = section['start'].split(':')
             section_minutes = int(section_start[0]) * 60 + int(section_start[1])
             logger.debug('Get section by time: {} >= {}? {}'
-                        .format(now_minutes, section_minutes, now_minutes >= section_minutes))
+                         .format(now_minutes, section_minutes, now_minutes >= section_minutes))
             if now_minutes >= section_minutes:
                 return self.sections.index(section), section
 
