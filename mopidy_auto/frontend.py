@@ -109,7 +109,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         for section in reversed(self.sections):
             section_start = section['start'].split(':')
             section_minutes = int(section_start[0]) * 60 + int(section_start[1])
-            logger.info('Get section by time: {} >= {}? {}'
+            logger.debug('Get section by time: {} >= {}? {}'
                         .format(now_minutes, section_minutes, now_minutes >= section_minutes))
             if now_minutes >= section_minutes:
                 return self.sections.index(section), section
@@ -118,7 +118,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
     def get_random_album(self, uri, section_index):
         track_uris = []
-        logger.info("Navigating file structure, URI: %s", uri)
+        logger.debug("Navigating file structure, URI: %s", uri)
 
         # Get all directories or tracks at the current URI
         refs = self.core.library.browse(uri).get()
@@ -136,6 +136,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # If tracks were found, save album to history and return tracks
         if len(track_uris) > 0:
             self.history[section_index].append(uri)
+            logger.info("Found %d tracks in folder '%s'", len(track_uris), uri)
             return track_uris
 
         # If not, limit refs to unplayed ones
@@ -151,8 +152,6 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         return self.get_random_album(refs[rand_idx].uri, section_index)
 
     def play_uris(self, uris):
-        logger.info("Found %d tracks", len(uris))
-
         # Clear tracklist
         self.core.tracklist.clear()
 
