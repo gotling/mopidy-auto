@@ -91,7 +91,11 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         uri = self.base_path + self.section['folder']
         tracks = self.get_random_album(uri, section_index)
 
-        # and play it's tracks
+        # If no tracks were found, try again
+        while not tracks:
+            tracks = self.get_random_album(uri, section_index)
+
+        # Play the tracks
         self.play_uris(tracks)
 
     def get_section_by_time(self):
@@ -133,6 +137,11 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
         # If not, limit refs to unplayed ones
         refs = self.get_unplayed_directories(refs, section_index)
+
+        # Handle empty leaf folder
+        if len(refs) <= 0:
+            logger.warning('Empty leaf folder found: %s', uri)
+            return None
 
         #  and recursively get a random one
         rand_idx = random.randint(0, len(refs) - 1)
