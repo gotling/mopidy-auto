@@ -118,6 +118,18 @@ To make sure playback does not stop due to file types unhandled by Mopidy this e
     .aac
     .m4a
     .sfk
+    .url
+    .cue
+    .pdf
+    .m3u8
+    .bmp
+    .lnk
+    .bc!
+    .BMP
+    .psp
+    .ape
+    .aif
+    .rar
 
 Project resources
 =================
@@ -128,6 +140,12 @@ Project resources
 
 Changelog
 =========
+
+0.4.0
+-----
+
+- Handle empty folders gracefully - `#15 <https://github.com/gotling/mopidy-auto/issues/15>`_
+- Added move album - `#12 <https://github.com/gotling/mopidy-auto/issues/12>`_
 
 0.3.0
 -----
