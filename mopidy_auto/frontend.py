@@ -101,7 +101,6 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # Play the tracks
         self.play_uris(tracks)
 
-
     def get_section_by_time(self):
         now = datetime.datetime.now()
         now_minutes = now.hour * 60 + now.minute
