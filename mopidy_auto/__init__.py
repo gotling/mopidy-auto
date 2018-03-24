@@ -9,7 +9,7 @@ import tornado.web
 
 from .web import IndexHandler, MoveHandler, VolumeHandler
 
-__version__ = '0.4.0'
+__version__ = '0.5.0-b1'
 
 logger = logging.getLogger(__name__)
 

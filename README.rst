@@ -141,6 +141,11 @@ Project resources
 Changelog
 =========
 
+0.5.0
+-----
+
+- Handle first section not starting at midnight by returning the last section
+
 0.4.0
 -----
 
