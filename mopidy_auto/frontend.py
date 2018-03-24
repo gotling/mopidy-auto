@@ -101,6 +101,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # Play the tracks
         self.play_uris(tracks)
 
+
     def get_section_by_time(self):
         now = datetime.datetime.now()
         now_minutes = now.hour * 60 + now.minute
@@ -114,7 +115,9 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
             if now_minutes >= section_minutes:
                 return self.sections.index(section), section
 
-        return None
+        # If no section match, the first session starts after midnight
+        # Use the last section that should play into the morning
+        return self.sections.index(section[-1]), section[-1]
 
     def get_random_album(self, uri, section_index):
         track_uris = []
