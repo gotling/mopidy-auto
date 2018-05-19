@@ -147,9 +147,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # If not, limit refs to unplayed ones
         refs = self.get_unplayed_directories(refs, section_index, root)
 
-        # Handle empty leaf folder
+        # Handle no folders returned
         if len(refs) <= 0:
-            logger.warning('Empty leaf folder found: %s', uri)
             return None
 
         #  and recursively get a random one
