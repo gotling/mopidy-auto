@@ -66,7 +66,7 @@ Mopidy-Auto to your Mopidy configuration file::
   # Key required to access admin section
   admin_key = 123
 
-  # URI where the sections folders are located
+  # URI where the sections folders are located. Should be same as '[file] media_dirs'
   base_path = file:///media/Music/
 
   # Max number of tracks that can be added from one folder. Set to 0 or lower to disable limit
