@@ -2,6 +2,7 @@ import datetime
 import logging
 import random
 import sys
+import urllib2
 
 from mopidy import core
 
@@ -139,7 +140,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # If tracks were found, save album to history and return tracks
         if len(track_uris) > 0:
             self.history[section_index].append(uri)
-            logger.info("Found %d tracks in folder '%s'", len(track_uris), uri)
+            logger.info("Found %d tracks in folder '%s'", len(track_uris), urllib2.unquote(uri))
+
             return track_uris
 
         # If not, limit refs to unplayed ones
