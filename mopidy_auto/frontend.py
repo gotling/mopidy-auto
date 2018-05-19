@@ -139,7 +139,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # If tracks were found, save album to history and return tracks
         if len(track_uris) > 0:
             self.history[section_index].append(uri)
-            logger.info("Found %d tracks in folder '%s'", len(track_uris), urllib2.unquote(uri))
+            logger.info("Found %d tracks in folder '%s'", len(track_uris), urllib2.unquote(uri.decode('ascii', 'ignore')))
 
             return track_uris
 
