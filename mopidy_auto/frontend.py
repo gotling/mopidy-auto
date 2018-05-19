@@ -145,7 +145,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
             return track_uris
 
         # If not, limit refs to unplayed ones
-        refs = self.get_unplayed_directories(refs, section_index)
+        refs = self.get_unplayed_directories(refs, section_index, root)
 
         # Handle empty leaf folder
         if len(refs) <= 0:
@@ -166,18 +166,30 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # Start playing
         self.core.playback.play()
 
-    def get_unplayed_directories(self, refs, section_index):
+    def get_unplayed_directories(self, refs, section_index, root):
+        if len(refs) == 0:
+            return []
+
         # Get all directories that are not in this sections history
         unplayed = [x for x in refs if x.uri not in self.history[section_index]]
 
-        # If all albums have been played:
+        # If all albums on this level have been played:
         if len(unplayed) == 0:
-            logger.info("Unique albums depleted. Clearing history")
+            if root:
+                # All folder on the root level has been played
+                logger.info("Unique albums depleted. Clearing history for section %d", section_index)
 
-            # Return a list containing all albums except the last one played
-            unplayed = [x for x in refs if x.uri != self.history[section_index][-1]]
+                # Return a list containing all albums except the last one played
+                unplayed = [x for x in refs if x.uri != self.history[section_index][-1]]
 
-            # And clear the sections history
-            self.history[section_index] = []
+                # And clear the sections history
+                self.history[section_index] = []
+            else:
+                # Sub level, add the parent of the refs to history
+                parent_uri = refs[0].uri.rpartition('/')[0]
+                self.history[section_index].append(parent_uri)
+
+                # Return an empty list which will be handled as a empty leaf
+                unplayed = []
 
         return unplayed
