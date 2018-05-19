@@ -119,8 +119,8 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
         # Use the last section that should play into the morning
         # TODO: Looks suspicious, should be self.section not section?
         return self.sections.index(section[-1]), section[-1]
-
-    def get_random_album(self, uri, section_index):
+    
+    def get_random_album(self, uri, section_index, root=True):
         track_uris = []
         logger.debug("Navigating file structure, URI: %s", uri)
 
@@ -154,7 +154,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
         #  and recursively get a random one
         rand_idx = random.randint(0, len(refs) - 1)
-        return self.get_random_album(refs[rand_idx].uri, section_index)
+        return self.get_random_album(refs[rand_idx].uri, section_index, root=False)
 
     def play_uris(self, uris):
         # Clear tracklist
