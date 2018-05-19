@@ -116,6 +116,7 @@ class AutoFrontend(pykka.ThreadingActor, core.CoreListener):
 
         # If no section match, the first session starts after midnight
         # Use the last section that should play into the morning
+        # TODO: Looks suspicious, should be self.section not section?
         return self.sections.index(section[-1]), section[-1]
 
     def get_random_album(self, uri, section_index):
