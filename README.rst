@@ -144,6 +144,7 @@ Changelog
 0.5.0
 -----
 
+- If folder was deeper than one level unique albums were thought to be depleted to early
 - Handle first section not starting at midnight by returning the last section
 
 0.4.0
