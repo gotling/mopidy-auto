@@ -131,6 +131,23 @@ To make sure playback does not stop due to file types unhandled by Mopidy this e
     .aif
     .rar
 
+Automatically start playback
+============================
+
+By adding a cronjob you can have playback start automatically a certain time or when the device is booted.
+
+Edit crontab
+
+    crontab -e
+
+Start playback at 7 o'clock every morning
+
+    0 7 * * * curl -d '{"jsonrpc": "2.0", "id": 1, "method": "core.tracklist.clear"}' http://localhost:6680/mopidy/rpc
+
+Start playback on device boot
+
+    @reboot sleep 60 && curl -d '{"jsonrpc": "2.0", "id": 1, "method": "core.tracklist.clear"}' http://localhost:6680/mopidy/rpc
+
 Project resources
 =================
 
